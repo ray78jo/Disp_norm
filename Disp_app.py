@@ -2,9 +2,6 @@ import streamlit as st
 import numpy as np
 
 def main():
-    # Display logo
-    st.image(r"C:\Users\paul\OneDrive - Oldendorff Carriers\Documents\Python Scripts\Disp\logo.png", width=100)
-
     st.title("Displacement Normalization Calculator")
 
     st.markdown(
@@ -95,6 +92,7 @@ def main():
 
     # Calculations
     new_me_cons = me_cons * (new_displacement / current_displacement) ** n
+    percent_change = ((new_me_cons - me_cons) / me_cons) * 100
 
     # Outputs
     st.markdown(
@@ -109,11 +107,16 @@ def main():
             unsafe_allow_html=True
         )
 
-    percent_increase = ((new_me_cons - me_cons) / me_cons) * 100
-    st.markdown(
-        f"<h3 style='color: blue; font-weight: bold;'>% Increase in ME Consumption: {percent_increase:.1f}%</h3>",
-        unsafe_allow_html=True
-    )
+    if percent_change > 0:
+        st.markdown(
+            f"<h3 style='color: red; font-weight: bold;'>% Change in ME Consumption: {percent_change:.1f}% &#9650;</h3>",
+            unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            f"<h3 style='color: green; font-weight: bold;'>% Change in ME Consumption: {percent_change:.1f}% &#9660;</h3>",
+            unsafe_allow_html=True
+        )
 
 if __name__ == "__main__":
     main()
